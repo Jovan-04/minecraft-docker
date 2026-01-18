@@ -1,7 +1,8 @@
 # Minecraft Docker Server
 A docker image and compose build for running and controlling a Minecraft server from inside a Docker container. 
 * Supports any version of Minecraft; you just need a link to the server.jar
-    * tested on 1.21, more to come
+    * tested on vanilla 1.21, more to come
+    * note: mod loaders (like Fabric, Forge, and Paper) are not officially supported, but they may still work
 * Server console access via [RCON](https://minecraft.wiki/w/RCON)
     * uses [Tiiffi/mcrcon](https://github.com/Tiiffi/mcrcon) as a prepackaged RCON client
 * All server files stored in a Docker volume
@@ -19,7 +20,7 @@ docker build -t minecraft_server .
 ```
 
 ### Run with Docker Compose
-`docker-compose.yml` (included in this repository):
+In the same directory as `docker-compose.yml` (included in this repository):
 ```sh
 docker compose up -d
 ```
@@ -27,6 +28,9 @@ docker compose up -d
 
 ### First Startup
 On first startup (when the data volume is empty):
+* Make sure to update the environment variables in the `docker-compose.yml` file
+    * `MCRCON_PASS` is the password to your server's RCON panel 
+    * `SERVER_JAR_DOWNLOAD_URL` is a web URL of a `server.jar` file that the container will run to start your server
 * `server.properties` is created from a template
 * `eula.txt` is generated and automatically accepted
 * A default RCON configuration is written
@@ -35,7 +39,7 @@ On first startup (when the data volume is empty):
 On subsequent startups, existing files are reused unchanged and environment variables are unused.
 
 ### RCON Access
-Minecraft implements the Remote Console (RCON) protocol, which allows server administrators to remotely execute commands. See more info [here](https://minecraft.wiki/w/RCON) and [here](https://developer.valvesoftware.com/wiki/Source_RCON_Protocol). RCON access is enabled automatically from inside the container. **Do not expose the RCON service to the internet directly!!!** RCON is not encrypted, so exposing this service can give hackers direct access to your server's administrator console.
+Minecraft implements the Remote Console (RCON) protocol, which allows server administrators to remotely execute commands. See more info [here](https://minecraft.wiki/w/RCON) and [here](https://developer.valvesoftware.com/wiki/Source_RCON_Protocol). RCON access is enabled automatically from inside the container only. **Do not expose the RCON service to the internet directly!!!** RCON is not encrypted, so exposing this service can give hackers direct access to your server's administrator console.
 
 Log into the container:
 ```sh

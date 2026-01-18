@@ -11,9 +11,9 @@ RUN unzip -j /usr/bin/mcrcon.zip -d /usr/bin/mc-rcon && chmod a+x /usr/bin/mc-rc
 FROM eclipse-temurin:21
 
 COPY --from=builder /usr/bin/mc-rcon /usr/bin/mc-rcon
-COPY start-server.sh /usr/bin/start-server.sh
+COPY scripts/start-server.sh /usr/bin/start-server.sh
 RUN chmod a+x /usr/bin/start-server.sh
-COPY mcrcon /usr/bin/mcrcon
+COPY scripts/mcrcon /usr/bin/mcrcon
 RUN chmod a+x /usr/bin/mcrcon
 COPY template/ /defaults/
 
