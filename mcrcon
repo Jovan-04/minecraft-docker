@@ -1,0 +1,4 @@
+#!/bin/bash
+exec /usr/bin/mc-rcon/mcrcon -p "$(
+  grep '^rcon.password=' /minecraft_data/server.properties | cut -d= -f2-
+)" "$@"

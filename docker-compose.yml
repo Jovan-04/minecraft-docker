@@ -1,0 +1,22 @@
+services:
+  minecraft_server:
+    image: minecraft_server
+    container_name: minecraft_server
+    restart: unless-stopped
+    stop_grace_period: 120s
+    volumes:
+      - data:/minecraft_data
+    ports:
+      - 25565:25565
+    environment:
+      # note: this is only used when initializing a new volume (technically, initializing a new server.properties file)
+      # if you want to change the password to your RCON server, edit it in your existing volume's server.properties file
+      MCRCON_PASS: YourPasswordHere
+      # note: again, this download URL is only used when initializing a new volume
+      # this is where the container will attempt to download a server.jar from
+      SERVER_JAR_DOWNLOAD_URL: https://piston-data.mojang.com/v1/objects/450698d1863ab5180c25d7c804ef0fe6369dd1ba/server.jar
+
+volumes:
+  data:
+    name: minecraft_server_data
+
